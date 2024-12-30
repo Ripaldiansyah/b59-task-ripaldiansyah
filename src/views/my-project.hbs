@@ -1,0 +1,127 @@
+{{#>layout title="My Project"}}
+<section>
+    <div class="container text-center p-2 py-md-5 ">
+        <h2 class="fw-bold">ADD MY PROJECT</h2>
+        <form action="/projects" method="post" enctype="multipart/form-data" id="formAddProject">
+            <div class="d-flex flex-column text-start mb-2">
+                <label for="projectName">Project Name</label>
+                <input type="text" name="projectName" id="projectName" class="border-0 shadow rounded-1 py-2"
+                    required />
+            </div>
+            <div class="d-flex flex-row text-start gap-3 mb-2">
+                <div class="d-flex flex-column text-start w-100">
+                    <label for="startDate">Start date</label>
+                    <input type="date" name="startDate" id="startDate" class="border-0 shadow rounded-1 py-2"
+                        required />
+                </div>
+                <div class="d-flex flex-column text-start w-100">
+                    <label for="endDate">End date</label>
+                    <input type="date" name="endDate" id="endDate" class="border-0 shadow rounded-1 py-2" required />
+                </div>
+            </div>
+            <div class="d-flex flex-column text-start mb-2">
+                <label for="description">Description</label>
+                <textarea name="description" id="description" rows="6" class="border-0 shadow rounded-1 py-2 "
+                    required></textarea>
+            </div>
+
+            <div class="d-flex flex-column text-start mb-2">
+                <label class="label-project">Technologies</label>
+                <div class="row row-cols-2">
+                    <div>
+                        <input type="checkbox" name="technologies" id="nodeJs" value="Node JS" class="checkbox" />
+                        <label for="nodeJs">Node Js</label>
+                    </div>
+
+                    <div>
+                        <input type="checkbox" name="technologies" id="nextJs" value="Next JS" class="checkbox" />
+                        <label for="nextJs">Next Js</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" name="technologies" id="reactJs" value="React JS" class="checkbox" />
+                        <label for="reactJs">React Js</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" name="technologies" id="typeScript" value="TypeScript"
+                            class="checkbox" />
+                        <label for="typeScript">TypeScript</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex flex-column text-start mb-2">
+                <label for="imageUrl">Upload Image</label>
+                <div class="bg-white border-0 shadow rounded-1 m-0 position-relative d-flex align-items-center ">
+
+                    <input type="file" name="imageUrl" id="imageUrl" class="position-absolute z-0 file-upload"
+                        accept="image/*" required />
+                    <label for="imageUrl" class="d-flex w-100 justify-content-between  pe-4 rounded-1">
+                        <p class="bg-dark-subtle py-2 px-4 rounded-1 shadow  fw-bold text-muted z-2">choose
+                        </p>
+                        <i class="fa fa-paperclip my-auto" aria-hidden="true"></i>
+                    </label>
+                </div>
+            </div>
+            <div class="text-end p-3">
+                <button class="btn btn-dark rounded-5 px-5 py-2 fw-bold" id="btnAddProject">submit</button>
+            </div>
+        </form>
+    </div>
+</section>
+<section class="bg-white" id="my-projects">
+    <div class="container text-center p-2 py-md-5">
+        <div>
+            <h2 class="fw-bold">MY PROJECT</h2>
+
+        </div>
+        <div class="row col" id="cardProject">
+
+
+            {{#each projects}}
+            <div class="col-12 col-md-6 col-lg-4 mt-3">
+                <div class="card card-size" id="{{this.id}}">
+
+                    <a href="projects/{{this.id}}" class="d-block m-2 ">
+                        <img src="{{this.imageUrl}}" class="rounded-2 card-img-top" alt="foto" height="230">
+                    </a>
+                    <div class="card-body p-2">
+                        <h5 class="card-title text-start fs-5 fw-medium mb-0">{{this.projectName}}</h5>
+                        <p class="card-subtitle text-start fs-6 mb-3 text-secondary">durasi : {{duration this.startDate
+                            this.endDate}} </p>
+                        <p class="card-text text-justify">{{description this.description}} {{#if (isOver
+                            this.description)}} <a class="text-primary cursor-pointer" href="projects/{{this.id}}"> baca
+                                selengkapnya</a> {{/if}}
+                        </p>
+
+                        <div class="d-flex my-4 ">
+
+                            {{#each this.technologies}}
+                            <div>
+                                <img src="{{getIcon this}}" alt="{{this}}" width="50" />
+
+                            </div>
+
+                            {{/each}}
+                        </div>
+                        <div class="text-start w-100 d-flex gap-2">
+                            <a href="/projects/edit/{{this.id}}" class="text-white w-100"><button
+                                    class="btn btn-dark w-100">Edit</button></a>
+                            <form action="/projects/delete/{{this.id}}" method="POST" class="w-100"
+                                id="delete-{{this.id}}">
+                                <button type="button" class="btn btn-dark w-100" id="btn-delete-{{this.id}}"
+                                    onclick="deleteProject({{this.id}})">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{else}}
+            <div class="col-12 col-md-6 col-lg-4 mt-3 w-100">
+                <h5 class="text-center ">Tidak ada project</h5>
+            </div>
+            {{/each}}
+
+        </div>
+    </div>
+</section>
+{{/layout}}

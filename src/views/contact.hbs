@@ -1,0 +1,46 @@
+{{#>layout title="Contact"}}
+<section>
+    <div class="container text-center p-2 py-md-5 ">
+        <h2 class="fw-bold">GET IN TOUCH</h2>
+        <form id="contactForm">
+            <div class="d-flex flex-column text-start mb-2">
+                <label for="name">Name</label>
+                <input type="text" name="name" id="name" class="border-0 shadow rounded-1 py-2"
+                    required />
+            </div>
+            <div class="d-flex flex-column text-start mb-2">
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" class="border-0 shadow rounded-1 py-2"
+                    required />
+            </div>
+            <div class="d-flex flex-column text-start mb-2">
+                <label for="phoneNumber">Phone Number</label>
+                <input type="number" name="phoneNumber" id="phoneNumber" class="border-0 shadow rounded-1 py-2"
+                    required />
+            </div>
+            <div class="d-flex flex-column text-start mb-2"  >
+                <label for="phoneNumber">Subject</label>
+                <select name="subject" id="subject" class="border-0 shadow rounded-1 py-2">
+                  <option value="Frontend">Frontend</option>
+                  <option value="Backend">Backend</option>
+                </select>
+            </div>
+
+            
+            <div class="d-flex flex-column text-start mb-2">
+                <label for="message">Your Message</label>
+                <textarea name="message" id="message" rows="6" class="border-0 shadow rounded-1 py-2 "
+                    required></textarea>
+            </div>
+
+            
+
+           
+            <div class="text-end p-3">
+                <button class="btn btn-dark rounded-5 px-5 py-2 fw-bold" id="contactSubmitBtn">submit</button>
+            </div>
+        </form>
+    </div>
+</section>
+
+{{/layout}}

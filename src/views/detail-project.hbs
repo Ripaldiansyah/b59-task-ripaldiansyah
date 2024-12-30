@@ -1,0 +1,46 @@
+
+
+{{#>layout title="Detail Project"}}
+        <section>
+<div class="container text-center p-2 py-md-5">
+                <h2 class="fw-bold">{{project.projectName}}</h2>
+                <figure class="row row-cols-1 row-cols-md-2  mt-5">
+
+                    <img src="{{project.imageUrl}}"
+                        alt="" width="70%" height="300" class="  object-fit-cover">
+
+                    <div class="d-flex flex-column gap-2">
+                        <div>
+                            <p class="text-start fs-5 mb-1">Duration</p>
+                            <div class="d-flex align-items-center">
+                                <img width="30" height="30"
+                                    src="https://img.icons8.com/?size=100&id=59758&format=png&color=000000"
+                                    alt="calender">
+                                <p>{{formatDate project.startDate}} - {{formatDate project.endDate}}</p>
+                            </div>
+                            <div class="d-flex align-items-center mt-1">
+                                <img width="30" height="30"
+                                    src="https://img.icons8.com/?size=100&id=70370&format=png&color=000000" alt="time">
+                                <p>{{duration project.startDate
+                            project.endDate}}</p>
+                            </div>
+                        </div>
+                        <div class="pt-md-5">
+                            <p class="text-start fs-5 mb-1">Technologies</p>
+                            <div class="row row-cols-2 w-100 w-md-65">
+                              {{#each project.technologies}}
+                            <div class="d-flex align-items-center">
+                                <img src="{{getIcon this}}" alt="{{this}}" width="50" />
+                                <h5 class="fw-light">{{this}}</h5>
+                            </div>
+                            {{/each}}
+                            </div>
+                        </div>
+                    </div>
+                </figure>
+                <article>
+                    <p class="text-start">{{project.description}}</p>
+                </article>
+            </div>
+        </section>
+    {{/layout}}
