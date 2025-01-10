@@ -31,9 +31,9 @@ app.use("/projects", projetsRouter);
 app.use("/contacts", contactRouter);
 app.use("/testimonials", testimonialsRouter);
 app.use("/", authRouter);
-// app.use((req, res) => {
-//   res.redirect("/");
-// });
+app.use((req, res) => {
+  res.redirect("/");
+});
 app.listen(port, () => {
   console.log(`yeay connect ${port}`);
 });
