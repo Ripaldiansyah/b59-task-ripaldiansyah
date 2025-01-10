@@ -1,16 +1,25 @@
 {
-    "version": 2,
-    "builds": [
+  "version": 2,
+  "builds": [
       {
-        "src": "server.js",
-        "use": "@vercel/node"
+          "src": "server.js",
+          "use": "@vercel/node"
       }
-    ],
-    "routes": [
+  ],
+  "routes": [
       {
-        "src": "/src/(.*)",
-        "dest": "/server.js"
+          "src": "/assets/(.*)",
+          "dest": "/src/public/assets/$1"
+      },
+      {
+          "src": "/(.*)",
+          "dest": "/server.js"
       }
-    ]
+  ],
+  "env": {
+      "NODE_ENV": "production",
+      "BASE_URL": "https://your-vercel-domain.vercel.app",
+      "SESSION_KEY": "ABCDEFGH",
+      "PORT": "8080"
   }
-  
+}
