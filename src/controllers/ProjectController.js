@@ -1,14 +1,88 @@
-const { Project } = require("../models");
+const { Project, User, Testimoni } = require("../models");
 const process = require("process");
+const project = require("../models/project");
 
-async function index(req, res) {
+async function myProject(req, res) {
   try {
+    const user = req.session.user;
+
+    if (!user) {
+      return res.redirect("/login");
+    }
     const projects = await Project.findAll({
       order: [["createdAt", "DESC"]],
-      raw: true,
+
+      include: [
+        {
+          model: User,
+        },
+
+        {
+          model: Testimoni,
+          as: "Testimonis",
+        },
+      ],
+      where: {
+        userId: user.id,
+      },
     });
 
-    res.render("my-project", { projects });
+    projects.forEach((project) => {
+      const testimonis = project.Testimonis;
+
+      if (testimonis && testimonis.length > 0) {
+        const totalRate = testimonis.reduce(
+          (sum, testimoni) => sum + testimoni.rate,
+          0
+        );
+        const avgRate = totalRate / testimonis.length;
+        const roundedAvg = Math.round(avgRate);
+        project.avg = roundedAvg;
+      } else {
+        project.avg = 0;
+      }
+    });
+
+    return res.render("my-project", { user, projects });
+  } catch (error) {
+    console.log(error);
+  }
+}
+async function listProjects(req, res) {
+  try {
+    const user = req.session.user;
+
+    const projects = await Project.findAll({
+      order: [["createdAt", "DESC"]],
+      include: [
+        {
+          model: User,
+        },
+
+        {
+          model: Testimoni,
+          as: "Testimonis",
+        },
+      ],
+    });
+
+    projects.forEach((project) => {
+      const testimonis = project.Testimonis;
+
+      if (testimonis && testimonis.length > 0) {
+        const totalRate = testimonis.reduce(
+          (sum, testimoni) => sum + testimoni.rate,
+          0
+        );
+        const avgRate = totalRate / testimonis.length;
+        const roundedAvg = Math.round(avgRate);
+        project.avg = roundedAvg;
+      } else {
+        project.avg = 0;
+      }
+    });
+
+    return res.render("list-projects", { user, projects });
   } catch (error) {
     console.log(error);
   }
@@ -16,6 +90,10 @@ async function index(req, res) {
 
 async function store(req, res) {
   try {
+    const user = req.session.user;
+    if (!user) {
+      return res.redirect("/login");
+    }
     const { projectName, startDate, endDate, description, technologies } =
       req.body;
 
@@ -26,13 +104,14 @@ async function store(req, res) {
     const { filename } = req.file;
     const imageUrl = `${process.env.BASE_URL}/images/${filename}`;
 
-    const project = await Project.create({
+    await Project.create({
       projectName,
       startDate,
       endDate,
       description,
       technologies: tempTech,
       imageUrl,
+      userId: user.id,
     });
 
     res.redirect("/projects");
@@ -83,7 +162,16 @@ async function edit(req, res) {
 async function findById(req, res) {
   try {
     const project = await Project.findByPk(req.params.id, {
-      raw: true,
+      include: [
+        {
+          model: User,
+        },
+
+        {
+          model: Testimoni,
+          as: "Testimonis",
+        },
+      ],
     });
 
     return project;
@@ -95,19 +183,28 @@ async function findById(req, res) {
 async function getDetail(req, res) {
   try {
     const project = await findById(req, res);
+    const user = req.session.user;
     if (project) {
-      res.render("detail-project", { project });
+      console.log(JSON.stringify(project, null, 2));
+      return res.render("detail-project", { project, user });
     }
-    res.render("not-found");
+
+    return res.render("not-found", { user });
   } catch (error) {}
 }
 
 async function show(req, res) {
   try {
     const project = await findById(req, res);
-    console.log(project);
+    const user = req.session.user;
+    if (!user) {
+      return res.redirect("/login");
+    }
 
-    res.render("edit-project", { project });
+    if (user.id !== project.userId) {
+      return res.redirect("/");
+    }
+    return res.render("edit-project", { project, user });
   } catch (error) {}
 }
 
@@ -124,4 +221,12 @@ async function destroy(req, res) {
     console.log(error);
   }
 }
-module.exports = { index, store, getDetail, show, edit, destroy };
+module.exports = {
+  myProject,
+  store,
+  getDetail,
+  show,
+  edit,
+  destroy,
+  listProjects,
+};

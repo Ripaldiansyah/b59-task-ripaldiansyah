@@ -1,4 +1,31 @@
 const submitButton = document.getElementById("btnAddProject");
+const submitButtonRating = document.getElementById("btnSubmitRate");
+
+if (submitButtonRating) {
+  submitButtonRating.addEventListener("click", (e) => {
+    e.preventDefault();
+    const form = document.getElementById("formRating");
+    const isValid = form.checkValidity();
+    if (isValid) {
+      confirm({
+        text: "Rate project ini ?",
+        icon: "question",
+        titleConfirm: "Terima kasih telah memberikan nilai",
+        callback: () => {
+          form.submit();
+        },
+      });
+    } else {
+      confirm({
+        text: "Pastikan semuanya telah terisi",
+        icon: "error",
+        showCancelButton: false,
+        showResult: false,
+      });
+      form.reportValidity();
+    }
+  });
+}
 
 if (submitButton) {
   submitButton.addEventListener("click", (e) => {
@@ -86,10 +113,21 @@ if (editSubmitButton) {
   });
 }
 
-function addProject(form) {
+async function addProject(form) {
   const checkboxes = document.querySelectorAll(
     "input[name='technologies']:checked"
   );
+
+  const descriptionLength = form.description.value.length;
+
+  if (descriptionLength < 150) {
+    return confirm({
+      text: "Panjang deskripsi kurang dari 150",
+      icon: "warning",
+      showCancelButton: false,
+      showResult: false,
+    });
+  }
 
   const isValid = form.checkValidity() && checkboxes.length > 0;
   if (isValid) {
@@ -111,6 +149,7 @@ function addProject(form) {
     form.reportValidity();
   }
 }
+
 function editProject(form) {
   const checkboxes = document.querySelectorAll(
     "input[name='technologies']:checked"

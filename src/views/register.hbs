@@ -1,0 +1,71 @@
+{{#>layout title="Register" subtitle="Auth"}}
+<section>
+    <div class="d-md-flex h-full align-content-center">
+        <div class="w-100 h-100 align-content-center text-center  d-none  d-md-block">
+            <img src="https://dumbways.id/assets/images/brandred.png" alt="dumbways-logo">
+        </div>
+        <div class="col col-md-4 px-3 align-content-center ">
+            <h1 class="text-center mx-auto ">Register Now</h1>
+            {{!-- <h1 class="text-center mx-auto ">Manage Your projets</h1> --}}
+            <div class="container mt-4">
+                <form action="/register" method="post">
+                    {{#if response}}
+                    <div class="alert {{#if (checkSelected response.status "success")}} alert-success
+                        {{else}}alert-danger {{/if}} " role=" alert">
+                        {{response.message}}
+                    </div>
+                    {{printValue response.message}}
+                    {{/if}}
+                    <div class="d-flex flex-column text-start mb-2">
+                        <label for="fullname">Fullname</label>
+                        <input type="text" name="fullname" id="fullname" class="border-0 shadow rounded-1 py-2 px-2"
+                            required value="{{#if response.data}} {{response.data.fullname}} {{/if}}" />
+                    </div>
+                    <div class="d-flex flex-column text-start mb-2 mt-3">
+                        <label for="email">Email</label>
+                        <input type="email" name="email" id="email" class="border-0 shadow rounded-1 py-2 px-2"
+                            required  value="{{#if response.data}} {{response.data.email}} {{/if}}" />
+                    </div>
+                    <div class="d-flex flex-column text-start mb-2 mt-3">
+                        <label for="role">Role</label>
+                        <select name="role" id="role" class="border-0 shadow rounded-1 py-2">
+                            <option value="Frontend" {{#if (checkSelected response.data.role "Frontend" )}} selected
+                                {{/if}}>
+                                Frontend</option>
+                            <option value="Backend" {{#if (checkSelected response.data.role "Backend" )}} selected
+                                {{/if}}>
+                                Backend</option>
+                            <option value="Fullstack" {{#if (checkSelected response.data.role "Fullstack" )}} selected
+                                {{/if}}>
+                                Fullstack</option>
+                        </select>
+                    </div>
+                    <div class="d-flex flex-column text-start mb-2 mt-3">
+                        <label for="password">Password</label>
+                        <input type="password" name="password" id="password" class="border-0 shadow rounded-1 py-2 px-2"
+                            required />
+                    </div>
+                    <div class="d-flex flex-column text-start mb-2 mt-3">
+                        <label for="confirmPassword">Confirm Password</label>
+                        <input type="password" name="confirmPassword" id="confirmPassword"
+                            class="border-0 shadow rounded-1 py-2 px-2" required />
+                    </div>
+
+                    <div class="d-flex flex-column text-center mb-2 mt-3">
+                        <button type="submit" class="btn btn-dark py-3 mb-2">Register</button>
+                        <div class="d-flex align-items-center">
+                            <hr class="flex-grow-1">
+                            <p class="mx-3">or</p>
+                            <hr class="flex-grow-1">
+                        </div>
+                        <a href="/login" class="btn btn-outline-dark py-3 mt-2">Login</a>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+
+    </div>
+</section>
+{{/layout}}

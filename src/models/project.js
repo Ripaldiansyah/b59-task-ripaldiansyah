@@ -9,6 +9,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Project.belongsTo(models.User, { foreignKey: "userId" });
+      Project.hasMany(models.Testimoni, {
+        foreignKey: "projectId",
+      });
     }
   }
   Project.init(
@@ -19,11 +23,13 @@ module.exports = (sequelize, DataTypes) => {
       description: DataTypes.TEXT,
       technologies: DataTypes.ARRAY(DataTypes.STRING),
       imageUrl: DataTypes.STRING,
+      userId: DataTypes.INTEGER,
     },
     {
       sequelize,
       modelName: "Project",
     }
   );
+
   return Project;
 };

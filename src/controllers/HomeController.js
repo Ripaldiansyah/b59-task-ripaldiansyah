@@ -1,5 +1,6 @@
 function renderHome(req, res) {
-  res.render("index");
+  const user = req.session.user;
+  return res.render("index", { user });
 }
 
 module.exports = { renderHome };

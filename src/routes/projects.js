@@ -1,12 +1,13 @@
 const express = require("express");
 const router = express.Router();
 const {
-  index,
+  myProject,
   store,
   show,
   edit,
   destroy,
   getDetail,
+  listProjects,
 } = require("../controllers/ProjectController");
 const multer = require("multer");
 
@@ -20,7 +21,8 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage: storage });
-router.get("/", index);
+router.get("/list-projects", listProjects);
+router.get("/", myProject);
 router.get("/:id", getDetail);
 router.get("/edit/:id", show);
 router.post("/edit/:id", upload.single("imageUrl"), edit);

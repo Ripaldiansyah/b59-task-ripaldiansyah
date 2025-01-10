@@ -16,11 +16,31 @@ a {
 p {
   margin: 0;
 }
-.cursor-pointer {
-  cursor: pointer;
-}
+
 .text-justify {
   text-align: justify;
+}
+
+.rating {
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.star {
+  font-size: 50px;
+  color: #ccc;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.star:hover,
+.star:hover ~ .star {
+  color: #ffcc00;
+}
+
+input:checked + .star,
+input:checked + .star ~ .star {
+  color: #ffc107;
 }
 
 /* checkbox */
@@ -62,6 +82,10 @@ p {
 
 .file-upload:focus {
   outline: none !important;
+}
+
+.h-full {
+  height: calc(100vh - 60px) !important;
 }
 
 @media (min-width: 997px) {

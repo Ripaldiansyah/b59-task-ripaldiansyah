@@ -1,5 +1,6 @@
 function renderContact(req, res) {
-  res.render("contact");
+  const user = req.session.user;
+  return res.render("contact", { user });
 }
 
 module.exports = { renderContact };

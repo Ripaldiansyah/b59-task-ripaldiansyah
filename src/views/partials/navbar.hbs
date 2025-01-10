@@ -1,38 +1,71 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary px-lg-5 shadow-sm">
   <div class="container-fluid">
     <a class="navbar-brand" href="/">
-      <img
-        src="https://dumbways.id/assets/images/brandred.png"
-        alt="Bootstrap"
-        width="30"
-      />
+      <img src="https://dumbways.id/assets/images/brandred.png" alt="Bootstrap" width="30" />
     </a>
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0 ps-lg-3">
         <li class="nav-item">
-          <a
-            class="nav-link {{#if (eq title 'Home')}} active fw-bold {{/if}}"
-            href="/"
-          >Home</a>
+          <a class="nav-link {{#if (eq title 'Home')}} active fw-bold {{/if}}" href="/">Home</a>
         </li>
-        <li class="nav-item fw-medium">
-           
-          <a  class="nav-link {{#if (eq title 'My Project')}} active fw-bold {{/if}}"  href="/projects">My Project</a>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle {{#if (eq subtitle 'Projects')}} active fw-bold {{/if}}" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Projects
+          </a>
+          <ul class="dropdown-menu">
+            
+        <li><a class="dropdown-item {{#if (eq title 'List Projects')}} active fw-bold {{/if}}"
+                href="/projects/list-projects">List Projects</a></li>
+                <li><a class="dropdown-item {{#if (eq title 'My Project')}} active fw-bold {{/if}}" href="/projects">My Project</a></li>
+          </ul>
+           </li>
+           <li class="nav-item">
+          <a class="nav-link {{#if (eq subtitle 'Testimonials')}} active fw-bold {{/if}}" href="/testimonials">Testimonials</a>
+        </li>
+        
+      </ul>
+      {{#if user}}
+       <ul class="navbar-nav me-2 mb-2 mb-lg-0">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+           <i class="fa-solid fa-user"></i>
+              <p class="mx-2 ">{{user.name}}</p>
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item {{#if (eq title 'Login')}} active fw-bold {{/if}}" href="/logout">Logout</a></li>
+            {{!-- <li><a class="dropdown-item {{#if (eq title 'Register')}} active fw-bold {{/if}}"
+                href="/register">Register</a></li> --}}
+
+          </ul>
         </li>
       </ul>
-      <a href="/contacts"><button class="btn btn-dark fw-medium px-lg-4" type="submit">Contact Me</button></a>
+
+       
       
+      {{else}}
+
+      <ul class="navbar-nav me-2 mb-2 mb-lg-0">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle {{#if (eq subtitle 'Auth')}} active fw-bold {{/if}}" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Auth
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item {{#if (eq title 'Login')}} active fw-bold {{/if}}" href="/login">Login</a></li>
+            <li><a class="dropdown-item {{#if (eq title 'Register')}} active fw-bold {{/if}}"
+                href="/register">Register</a></li>
+
+          </ul>
+        </li>
+      </ul>
+
+      <div class="d-flex flex-column">
+        {{/if}}
+        <a href="/contacts"><button class="btn btn-dark fw-medium px-lg-4" type="submit">Contact Me</button></a>
+      </div>
     </div>
   </div>
 </nav>

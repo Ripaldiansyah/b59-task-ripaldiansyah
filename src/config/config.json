@@ -1,9 +1,9 @@
 {
   "development": {
-    "username": "postgres",
-    "password": "password",
-    "database": "dumbways_project",
-    "host": "127.0.0.1",
+    "username": "ripal",
+    "password": "P@55word!@#",
+    "database": "dumbways_b59",
+    "host": "103.127.134.8",
     "port": 5432,
     "dialect": "postgres"
   },
@@ -16,10 +16,10 @@
     "dialect": "postgres"
   },
   "production": {
-    "username": "postgres",
-    "password": "password",
-    "database": "dumbways_project",
-    "host": "127.0.0.1",
+    "username": "ripal",
+    "password": "P@55word!@#",
+    "database": "dumbways_b59",
+    "host": "103.127.134.8",
     "port": 5432,
     "dialect": "postgres"
   }
