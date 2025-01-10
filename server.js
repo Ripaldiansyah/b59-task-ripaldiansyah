@@ -11,7 +11,7 @@ const testimonialsRouter = require("./src/routes/testimonials");
 const authRouter = require("./src/routes/auth");
 const { renderHome } = require("./src/controllers/HomeController");
 const { registerHelpers } = require("./src/config/handleBarsConfig");
-
+const cloudinary = require("cloudinary").v2;
 require("./src/config/ViewConfig")(app, express, path, hbs);
 require("./src/config/expressConfig")(app, express);
 require("dotenv").config();
@@ -25,6 +25,12 @@ app.use(
     saveUninitialized: true,
   })
 );
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 app.get("/", renderHome);
 app.use("/projects", projetsRouter);

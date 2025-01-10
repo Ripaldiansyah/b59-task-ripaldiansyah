@@ -101,8 +101,7 @@ async function store(req, res) {
     if (!Array.isArray(technologies)) {
       tempTech = [technologies];
     }
-    const { filename } = req.file;
-    const imageUrl = `${process.env.BASE_URL}/images/${filename}`;
+    const { path } = req.file;
 
     await Project.create({
       projectName,
@@ -110,7 +109,7 @@ async function store(req, res) {
       endDate,
       description,
       technologies: tempTech,
-      imageUrl,
+      imageUrl: path,
       userId: user.id,
     });
 
@@ -130,8 +129,8 @@ async function edit(req, res) {
     }
     let imageUrl;
     if (req.file) {
-      const { filename } = req.file;
-      imageUrl = `${process.env.BASE_URL}/images/${filename}`;
+      const { path } = req.file;
+      imageUrl = path;
     }
 
     const oldProject = await findById(req, res);
@@ -155,7 +154,7 @@ async function edit(req, res) {
 
     res.redirect("/projects#my-projects");
   } catch (error) {
-    console.log(error);
+    console.log(`ini error error`);
   }
 }
 
