@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const port = 8080;
+
 const path = require("path");
 const hbs = require("hbs");
 const session = require("express-session");
@@ -15,6 +15,7 @@ const { registerHelpers } = require("./src/config/handleBarsConfig");
 require("./src/config/ViewConfig")(app, express, path, hbs);
 require("./src/config/expressConfig")(app, express);
 require("dotenv").config();
+const port = process.env.PORT || 8080;
 registerHelpers(hbs);
 app.use(
   session({
@@ -34,5 +35,5 @@ app.use((req, res) => {
   res.redirect("/");
 });
 app.listen(port, () => {
-  console.log("yeay connect");
+  console.log(`yeay connect ${port}`);
 });
